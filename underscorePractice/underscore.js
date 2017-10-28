@@ -63,17 +63,71 @@ var customers = [{
 // Create and array of all email addresses
 // first without using underscore's pluck, then with it.
 
+// Using map
+var emailAddresses = customers.map( (customer) => {
+  return customer.email;
+})
+// Using for loop
+var emails2 = [];
+for (var i=0; i < customers.length; i++){
+  if (customers[i]['email']){
+    emails2.push(customers[i].email)
+  }
+}
 
+// Using Underscores
+var emailsUnderscores = _.pluck(customers, 'email');
 
-
+console.log('emails', emailAddresses);
+console.log('emails2', emails2);
+console.log('emailsUnderscores', emailsUnderscores);
 
 var inviteList1 = ['Ed', 'Fanny', 'Mildred', 'Alice', 'James'];
 var inviteList2 = ['Jake', 'Mildred', 'Jimmy', 'Ed', 'Franklin']
 
 
-  // Uh oh! We are having a party and two invite lists were created. 
+  // Uh oh! We are having a party and two invite lists were created.
   // Create one list of the people we want at the party (no duplicates).
   // Then remove all duplicates using _.union().
+
+var newArray = [];
+for(var i=0; i < inviteList1.length; i++){
+  if(newArray.indexOf(inviteList1[i]) === -1){
+    newArray.push(inviteList1[i])
+  }
+}
+for (var i=0; i < inviteList2.length; i++){
+  if(newArray.indexOf(inviteList2[i]) === -1){
+    newArray.push(inviteList2[i])
+  }
+}
+console.log('newArray', newArray);
+
+//or
+for (var i=0; i < inviteList1.length; i++){
+  if (inviteList2.indexOf(inviteList1[i]) === -1){
+    inviteList2.push(inviteList1[i])
+  }
+}
+console.log('inviteList2', inviteList2);
+
+var newList = inviteList1.concat(inviteList2);
+var newArr = [];
+for(var i=0; i < newList.length; i++){
+  if(newArray.indexOf(newList[i]) === -1){
+    newArray.push(newList[i])
+  }
+}
+
+console.log('newArray', newArray);
+
+
+// using underscores
+
+var unionArray = _.union(inviteList1, inviteList2);
+console.log('unionArray', unionArray);
+
+
 
 
 
@@ -86,6 +140,28 @@ var inviteList2 = ['Jake', 'Mildred', 'Jimmy', 'Ed', 'Franklin']
 
 
   // Jim and Betty are having a party, but they only want to invite mutual friends. Create and array of mutual friends. First without using underscore, then using underscores _.intersection().
+
+
+
+var mutualFriends = [];
+for(var i = 0; i < friendsOfJim.length; i++){
+  if(friendsOfBetty.indexOf(friendsOfJim[i]) !== -1){
+    mutualFriends.push(friendsOfJim[i])
+  }
+}
+
+console.log('mutualFriends', mutualFriends);
+
+// With underscore
+var intersected = _.intersection(friendsOfJim, friendsOfBetty);
+console.log('intersected', intersected);
+
+
+
+
+
+
+
 
 
 var purchases = [{
@@ -110,6 +186,18 @@ var purchases = [{
 // First, group the purchases by company without underscore
 // then do it again using _.groupBy()
 
+var grouper = {}
 
+for (var i = 0; i < purchases.length; i++){
+  if(grouper.hasOwnProperty(purchases[i].company) && grouper[purchases[i].company]){
+    grouper[purchases[i].company].push(purchases[i])
+  } else{
+    grouper[purchases[i].company] = [];
+    grouper[purchases[i].company].push(purchases[i])
+  }
+}
 
+console.log('grouper', grouper);
 
+var grouped = _.groupBy(purchases, 'company');
+console.log('grouped', grouped);
